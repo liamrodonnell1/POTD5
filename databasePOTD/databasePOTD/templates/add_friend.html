@@ -1,0 +1,88 @@
+<head>
+    <style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+.red-button {
+    background-color: #FF5733;
+    color: #fff;
+    border: 1px solid #CC0000;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.red-button:hover {
+    background-color: #CC0000;
+}
+
+/* Blue Button */
+.blue-button {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #2979ab;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.blue-button:hover {
+    background-color: #2979ab;
+}
+    </style>
+</head>
+
+<h1>Friend Book</h1>
+<body>
+    <nav>
+        <form method="post" action="{% url 'add_friend' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Friend</button>
+        </form>
+    </nav>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Major</td>
+        <td>Year</td>
+        <td>Update?</td>
+        <td>Delete?</td>
+    </tr>
+    {% for friend in friends %}
+    <tr>
+        <td>{{ friend.name }}</td>
+        <td>{{ friend.major }}</td>
+        <td>{{ friend.year }}</td>
+        <td><a class="blue-button" href="{% url 'update_friend' friend.id %}">Update</a></td>
+        <td><a class="red-button" href="{% url 'delete_friend' friend.id %}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
